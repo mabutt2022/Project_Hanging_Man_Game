@@ -84,8 +84,25 @@ h6 {
 .col-2-row-4 {
     grid-column: 2 / 3;
     grid-row: 4 / 5;
-    background-color: rgb(255, 0, 212);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-top: auto;
+    margin-bottom: auto;
 
+}
+
+
+.wordtype {
+    width: 35px;
+    height: 32px;
+    text-align: center;
+    font-weight: bold;
+    border: none;
+    padding-bottom: 10px;
+    border-bottom: 2px;
+    border-bottom-style: solid;
+    border-bottom-color: red;
 }
 
 .col-1-row-4 {
