@@ -77,7 +77,6 @@ $("#keyboardLayer3").children("button").on('click', function() {
             `<input type="text" class="wordtype" maxlength="1" value="" readonly>`
           );
           wordDict[i] = word;
-          count += 1;
         }
       }
 
@@ -87,21 +86,38 @@ $("#keyboardLayer3").children("button").on('click', function() {
       // if all the dictWord is true or if the blank are not (word Char = 1) then rerun the method
       if (Object.keys(wordDict).length != halfWord) {
         $("#wordblank").empty();
-        count = 0;
         wordDict = {};
         this.divUpdateWithBlanks();
       }
     }
 
     updatingBlanks(mark) {
+        
+
         for (const [key, value] of Object.entries(wordDict)) {
             if (value === mark) {
                 let blankValue = document.querySelectorAll(".wordtype");
                 blankValue[key].value = mark;
                 delete wordDict[key]
-                break
-            }
+                count -= 1;
+                break;
+            } 
         }
+        
+        count += 1
+        console.log(count)
+        let countValue = document.querySelectorAll(".count");
+        countValue[0].innerHTML = count;
+
+        console.log(wordDict)
+        if (count === 5 || Object.keys(wordDict).length === 0) {
+            $("#keyboardLayer1").children("button").off("click");
+            $("#keyboardLayer2").children("button").off("click");
+            $("#keyboardLayer3").children("button").off("click");
+        }
+
+        
+        
     }
 
   }
