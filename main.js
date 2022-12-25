@@ -8,7 +8,7 @@ $(document).ready(function () {
   let count = 5;
   let start = false;
 
-  const easy = ["wonder", "baller", "lion"];
+  const easy = ["wonder", "baller", "lion", "better", "panda", "zebra", "rocky"];
 
   // Resetting the page
   const resetButton = document.querySelector("#reset");
@@ -33,7 +33,11 @@ $(document).ready(function () {
     // selecting the class and running the function
     let ObjClass = new AllFunction(wordSelected);
     ObjClass.clearOutDiv();
-    ObjClass.divUpdateWithBlanks();
+    setTimeout(newfunc2, 2000);
+    function newfunc2() {
+        ObjClass.divUpdateWithBlanks();
+    }
+    
   });
 
   // Keyboard key connection
@@ -137,7 +141,7 @@ $(document).ready(function () {
       function newFunc() {
         $("#level-button").empty();
         $("#winLoss").empty();
-        $("#level-button").append(`<h3>You have following tries left:</h3>`);
+        $("#level-button").append(`<h3 style="color: white;">Tries Remaining:</h3>`);
         $("#winLoss").append(` <div class="winLoss" id="winLoss">5</div>`);
         $("#level-button").fadeIn(1000);
         $("#winLoss").fadeIn(1000);
