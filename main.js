@@ -131,12 +131,22 @@ $(document).ready(function () {
     }
 
     clearOutDiv() {
-      $("#level-button").empty();
-      $("#level-button").append(`<h3>You have following tries left:</h3>`);
-      this.countValueChange(5);
+      $("#level-button").fadeOut(500);
+      $("#winLoss").fadeOut(500);
+      setTimeout(newFunc, 1000);
+      function newFunc() {
+        $("#level-button").empty();
+        $("#winLoss").empty();
+        $("#level-button").append(`<h3>You have following tries left:</h3>`);
+        $("#winLoss").append(` <div class="winLoss" id="winLoss">5</div>`);
+        $("#level-button").fadeIn(1000);
+        $("#winLoss").fadeIn(1000);
+      }
+
+      //   this.countValueChange();
     }
 
-    countValueChange(val) {
+    countValueChange(val = 5) {
       this.countHeader.innerHTML = val;
       this.countValue[0].innerHTML = count;
     }
