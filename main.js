@@ -8,7 +8,43 @@ $(document).ready(function () {
   let count = 5;
   let start = false;
 
-  const easy = ["wonder", "baller", "lion", "better", "panda", "zebra", "rocky"];
+  const easy = [
+    "wonder",
+    "baller",
+    "lion",
+    "better",
+    "panda",
+    "zebra",
+    "rocky",
+    "movie",
+    "builder",
+    "kitchen",
+  ];
+  const medium = [
+    "obediently",
+    "pacemaker",
+    "squeezable",
+    "appreciate",
+    "backpacker",
+    "blackjacks",
+    "carjacking",
+    "carjacking",
+    "empathized",
+    "friendship",
+  ];
+
+  const hard = [
+    "hockeypockey",
+    "homozygous",
+    "jackhammer",
+    "jargonized",
+    "quiczmaster",
+    "quicksteps",
+    "showjumper",
+    "zigzaggery",
+    "texturized",
+    "vampirized",
+  ];
 
   // Resetting the page
   const resetButton = document.querySelector("#reset");
@@ -35,9 +71,40 @@ $(document).ready(function () {
     ObjClass.clearOutDiv();
     setTimeout(newfunc2, 2000);
     function newfunc2() {
-        ObjClass.divUpdateWithBlanks();
+      ObjClass.divUpdateWithBlanks();
     }
-    
+  });
+
+  $("#medium").on("click", function () {
+    start = true;
+    lengthArrayAndRandomWord(medium);
+    let wordSelected = medium[randomNum];
+
+    // assessing the number of charters to be blank in the word game
+    halfWord = Math.floor(wordSelected.length / 2) - 1;
+    // selecting the class and running the function
+    let ObjClass = new AllFunction(wordSelected);
+    ObjClass.clearOutDiv();
+    setTimeout(newfunc2, 2000);
+    function newfunc2() {
+      ObjClass.divUpdateWithBlanks();
+    }
+  });
+
+  $("#hard").on("click", function () {
+    start = true;
+    lengthArrayAndRandomWord(hard);
+    let wordSelected = hard[randomNum];
+
+    // assessing the number of charters to be blank in the word game
+    halfWord = Math.floor(wordSelected.length / 2) - 1;
+    // selecting the class and running the function
+    let ObjClass = new AllFunction(wordSelected);
+    ObjClass.clearOutDiv();
+    setTimeout(newfunc2, 2000);
+    function newfunc2() {
+      ObjClass.divUpdateWithBlanks();
+    }
   });
 
   // Keyboard key connection
@@ -141,7 +208,9 @@ $(document).ready(function () {
       function newFunc() {
         $("#level-button").empty();
         $("#winLoss").empty();
-        $("#level-button").append(`<h3 style="color: white;">Tries Remaining:</h3>`);
+        $("#level-button").append(
+          `<h3 style="color: white;">Tries Remaining:</h3>`
+        );
         $("#winLoss").append(` <div class="winLoss" id="winLoss">5</div>`);
         $("#level-button").fadeIn(1000);
         $("#winLoss").fadeIn(1000);
