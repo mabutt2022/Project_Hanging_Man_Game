@@ -21,14 +21,14 @@ $(document).ready(function () {
     "kitchen",
   ];
   const medium = [
-    "obediently",
+    "chequebook",
     "pacemaker",
-    "squeezable",
+    "chickenpox",
     "appreciate",
     "backpacker",
     "blackjacks",
     "carjacking",
-    "carjacking",
+    "everything",
     "empathized",
     "friendship",
   ];
@@ -69,10 +69,9 @@ $(document).ready(function () {
     // selecting the class and running the function
     let ObjClass = new AllFunction(wordSelected);
     ObjClass.clearOutDiv();
-    setTimeout(newfunc2, 2000);
-    function newfunc2() {
+    setTimeout(function () {
       ObjClass.divUpdateWithBlanks();
-    }
+    }, 2000);
   });
 
   $("#medium").on("click", function () {
@@ -85,10 +84,9 @@ $(document).ready(function () {
     // selecting the class and running the function
     let ObjClass = new AllFunction(wordSelected);
     ObjClass.clearOutDiv();
-    setTimeout(newfunc2, 2000);
-    function newfunc2() {
+    setTimeout(function () {
       ObjClass.divUpdateWithBlanks();
-    }
+    }, 2000);
   });
 
   $("#hard").on("click", function () {
@@ -101,10 +99,9 @@ $(document).ready(function () {
     // selecting the class and running the function
     let ObjClass = new AllFunction(wordSelected);
     ObjClass.clearOutDiv();
-    setTimeout(newfunc2, 2000);
-    function newfunc2() {
+    setTimeout(function () {
       ObjClass.divUpdateWithBlanks();
-    }
+    }, 2000);
   });
 
   // Keyboard key connection
@@ -154,12 +151,14 @@ $(document).ready(function () {
 
         if (blankOrNoBlank || i === 0 || i === this.fullWord.length - 1) {
           $("#wordblank").append(
-            `<input type="text" class="wordtype" maxlength="1" value="${word}" readonly>`
+            `<p class="wordtype"><span>${word}</span></p>`
+            // `<input type="text" class="wordtype" maxlength="1" value="${word}" readonly>`
           );
           //   wordDict[i] = true;
         } else {
           $("#wordblank").append(
-            `<input type="text" class="wordtype" maxlength="1" value="" readonly>`
+            `<p class="wordtype"></p>`
+            // `<input type="text" class="wordtype" maxlength="1" value="" readonly>`
           );
           wordDict[i] = word;
         }
@@ -175,18 +174,24 @@ $(document).ready(function () {
     }
 
     updatingBlanks(mark) {
+      let foundKey = false;
       for (const [key, value] of Object.entries(wordDict)) {
         if (value === mark) {
           let blankValue = document.querySelectorAll(".wordtype");
-          blankValue[key].value = mark;
+          blankValue[key].innerHTML = `<span>${mark}</span>`;
+          blankValue[key].style.color = "green";
           delete wordDict[key];
-          count += 1;
+          foundKey = true;
           break;
         }
       }
 
-      count -= 1;
-      this.countValueChange(count);
+      if (!foundKey) {
+        count -= 1;
+        if (count) {
+          this.countValueChange(count);
+        }
+      }
 
       if (count === 0 || Object.keys(wordDict).length === 0) {
         this.allKeyboardFunctionDisabled();
@@ -208,35 +213,49 @@ $(document).ready(function () {
       function newFunc() {
         $("#level-button").empty();
         $("#winLoss").empty();
+        document.getElementById("level-button").style.marginTop = "35px";
         $("#level-button").append(
           `<h3 style="color: white;">Tries Remaining:</h3>`
         );
+
         $("#winLoss").append(` <div class="winLoss" id="winLoss">5</div>`);
         $("#level-button").fadeIn(1000);
         $("#winLoss").fadeIn(1000);
       }
-
-      //   this.countValueChange();
     }
 
     countValueChange(val = 5) {
+      $("#winLoss").fadeOut(100);
+      delayTime(200);
       this.countHeader.innerHTML = val;
       this.countValue[0].innerHTML = count;
+      $("#winLoss").fadeIn(500);
     }
 
     winLoss() {
       if (count === 0 && Object.keys(wordDict).length != 0) {
+        $("#winLoss").fadeOut(100);
+        delayTime(200);
         this.countHeader.innerHTML = "YOU LOST!!";
+        $("#winLoss").fadeIn(500);
+        $("#wordblank").empty()
+        document.getElementById('wordblank').style.backgroundImage = 'url("gifs/SkeletonDacingvLose.gif")'
       } else if (count != 0 && Object.keys(wordDict).length === 0) {
+        $("#winLoss").fadeOut(100);
+        delayTime(200);
         this.countHeader.innerHTML = "YOU WON!!";
+        $("#winLoss").fadeIn(500);
+        $("#wordblank").empty()
+        document.getElementById('wordblank').style.backgroundImage = 'url("gifs/SkeletonDacingv1.gif")'
       }
+      
     }
   }
 
   function currentDate() {
     var today = new Date();
     var dd = String(today.getDate()).padStart(2, "0");
-    var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+    var mm = String(today.getMonth() + 1).padStart(2, "0");
     var yyyy = today.getFullYear();
 
     today = mm + "-" + dd + "-" + yyyy;
@@ -249,3 +268,13 @@ $(document).ready(function () {
   // if the index value in the word is the same as innerHTML then it will update the below
   // value of the same index of input box
 });
+
+function delayTime(intTime) {
+  const currentMS = new Date().getTime();
+  const newMs = currentMS + intTime;
+  while (true) {
+    if (new Date().getTime() === newMs) {
+      break;
+    }
+  }
+}
