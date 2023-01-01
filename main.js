@@ -8,6 +8,7 @@ $(document).ready(function () {
   let count = 5;
   let start = false;
 
+  // easy array of words
   const easy = [
     "wonder",
     "baller",
@@ -20,6 +21,7 @@ $(document).ready(function () {
     "builder",
     "kitchen",
   ];
+  // medium array of words
   const medium = [
     "chequebook",
     "pacemaker",
@@ -32,7 +34,7 @@ $(document).ready(function () {
     "empathized",
     "friendship",
   ];
-
+  // hard array of words
   const hard = [
     "hockeypockey",
     "homozygous",
@@ -74,6 +76,7 @@ $(document).ready(function () {
     }, 2000);
   });
 
+  // setting trigger to medium button
   $("#medium").on("click", function () {
     start = true;
     lengthArrayAndRandomWord(medium);
@@ -89,6 +92,7 @@ $(document).ready(function () {
     }, 2000);
   });
 
+  // setting trigger to medium button
   $("#hard").on("click", function () {
     start = true;
     lengthArrayAndRandomWord(hard);
@@ -152,20 +156,14 @@ $(document).ready(function () {
         if (blankOrNoBlank || i === 0 || i === this.fullWord.length - 1) {
           $("#wordblank").append(
             `<p class="wordtype"><span>${word}</span></p>`
-            // `<input type="text" class="wordtype" maxlength="1" value="${word}" readonly>`
           );
-          //   wordDict[i] = true;
         } else {
-          $("#wordblank").append(
-            `<p class="wordtype"></p>`
-            // `<input type="text" class="wordtype" maxlength="1" value="" readonly>`
-          );
+          $("#wordblank").append(`<p class="wordtype"></p>`);
           wordDict[i] = word;
         }
       }
 
-      // if the crieteria does not meeting run the function again
-      // if all the dictWord is true or if the blank are not (word Char = 1) then rerun the method
+      // checking if based on the random function all the blanks were caught or not, if so, rerun the function to get the blanks
       if (Object.keys(wordDict).length != halfWord) {
         $("#wordblank").empty();
         wordDict = {};
@@ -173,6 +171,7 @@ $(document).ready(function () {
       }
     }
 
+    // Function to update the blanks of the word
     updatingBlanks(mark) {
       let foundKey = false;
       for (const [key, value] of Object.entries(wordDict)) {
@@ -185,7 +184,7 @@ $(document).ready(function () {
           break;
         }
       }
-
+      // This will reduce the count only if the char selected is not part of the full word
       if (!foundKey) {
         count -= 1;
         if (count) {
@@ -193,19 +192,23 @@ $(document).ready(function () {
         }
       }
 
+      // If the count turns to 0 or there is nothing left in the dicionary above disable all the keyboard function
       if (count === 0 || Object.keys(wordDict).length === 0) {
         this.allKeyboardFunctionDisabled();
       }
 
+      // checking to see if there is a winner or a loser
       this.winLoss();
     }
 
+    // disable all the keyboard funtion afterwords
     allKeyboardFunctionDisabled() {
       $("#keyboardLayer1").children("button").off("click");
       $("#keyboardLayer2").children("button").off("click");
       $("#keyboardLayer3").children("button").off("click");
     }
 
+    // Clearing out the divs and bringing the new text with the fade in and out function
     clearOutDiv() {
       $("#level-button").fadeOut(500);
       $("#winLoss").fadeOut(500);
@@ -224,6 +227,7 @@ $(document).ready(function () {
       }
     }
 
+    // Updating the count value in the HTML
     countValueChange(val = 5) {
       $("#winLoss").fadeOut(100);
       delayTime(200);
@@ -232,26 +236,29 @@ $(document).ready(function () {
       $("#winLoss").fadeIn(500);
     }
 
+    // Checking if there is a winner or loser function
     winLoss() {
       if (count === 0 && Object.keys(wordDict).length != 0) {
         $("#winLoss").fadeOut(100);
         delayTime(200);
         this.countHeader.innerHTML = "YOU LOST!!";
         $("#winLoss").fadeIn(500);
-        $("#wordblank").empty()
-        document.getElementById('wordblank').style.backgroundImage = 'url("gifs/SkeletonDacingvLose.gif")'
+        $("#wordblank").empty();
+        document.getElementById("wordblank").style.backgroundImage =
+          'url("gifs/SkeletonDacingvLose.gif")';
       } else if (count != 0 && Object.keys(wordDict).length === 0) {
         $("#winLoss").fadeOut(100);
         delayTime(200);
         this.countHeader.innerHTML = "YOU WON!!";
         $("#winLoss").fadeIn(500);
-        $("#wordblank").empty()
-        document.getElementById('wordblank').style.backgroundImage = 'url("gifs/SkeletonDacingv1.gif")'
+        $("#wordblank").empty();
+        document.getElementById("wordblank").style.backgroundImage =
+          'url("gifs/SkeletonDacingv1.gif")';
       }
-      
     }
   }
 
+  // Getting the current date and updating the HTML
   function currentDate() {
     var today = new Date();
     var dd = String(today.getDate()).padStart(2, "0");
@@ -269,6 +276,7 @@ $(document).ready(function () {
   // value of the same index of input box
 });
 
+// Alternative to Sleep functioni like python - setTimeout function was not working everytime.
 function delayTime(intTime) {
   const currentMS = new Date().getTime();
   const newMs = currentMS + intTime;
