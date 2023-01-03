@@ -5,5 +5,6 @@
 
 ### Game Play
 
-https://user-images.githubusercontent.com/83681358/210288752-6797c1d0-8184-4fbb-bd6f-fe2a53154155.mp4
+![gamePresentation v2](https://user-images.githubusercontent.com/83681358/210288905-b36ab976-baa8-4002-94c4-d0e9bb130328.gif)
+
 
